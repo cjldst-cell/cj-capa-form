@@ -8,199 +8,113 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', sans-serif;
-    background: #f5f5f7;
-    min-height: 100vh;
-    padding: 16px;
+    background: #f5f5f7; min-height: 100vh; padding: 16px 16px 40px;
   }
-  .container { max-width: 480px; margin: 0 auto; }
-
-  /* 헤더 */
+  .container { max-width: 500px; margin: 0 auto; }
   .header {
-    background: #1a1a2e;
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 12px;
-    text-align: center;
+    background: #1a1a2e; border-radius: 16px;
+    padding: 20px; margin-bottom: 12px; text-align: center;
   }
   .header h1 { color: #fff; font-size: 16px; font-weight: 600; margin-bottom: 4px; }
-  .header p { color: rgba(255,255,255,0.6); font-size: 12px; }
-
-  /* 카드 */
+  .header p  { color: rgba(255,255,255,0.55); font-size: 12px; }
   .card {
-    background: #fff;
-    border-radius: 16px;
-    padding: 16px 20px;
-    margin-bottom: 12px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    background: #fff; border-radius: 16px; padding: 16px 18px;
+    margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.07);
   }
-  .card-label {
-    font-size: 12px;
-    color: #888;
-    margin-bottom: 8px;
-    font-weight: 500;
-  }
-
-  /* 날짜 */
+  .card-label { font-size: 12px; color: #888; margin-bottom: 8px; font-weight: 500; }
   .date-input {
-    width: 100%;
-    padding: 12px;
-    border: 1.5px solid #e5e5e5;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 500;
-    color: #1a1a1a;
-    background: #fafafa;
-    cursor: pointer;
+    width: 100%; padding: 12px; border: 1.5px solid #e5e5e5; border-radius: 10px;
+    font-size: 16px; font-weight: 500; color: #1a1a1a; background: #fafafa;
   }
   .date-input:focus { outline: none; border-color: #1a1a2e; background: #fff; }
-
-  /* 센터 선택 */
   .center-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .center-btn {
-    padding: 16px 10px;
-    border: 2px solid #e5e5e5;
-    border-radius: 12px;
-    background: #fff;
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.15s;
+    padding: 14px 8px; border: 2px solid #e5e5e5; border-radius: 12px;
+    background: #fff; cursor: pointer; text-align: center; transition: all 0.15s;
     -webkit-tap-highlight-color: transparent;
   }
   .center-btn:active { transform: scale(0.97); }
-  .center-btn.selected {
-    border-color: #1a1a2e;
-    background: #f0f0f5;
-  }
-  .center-btn .icon { font-size: 24px; margin-bottom: 6px; }
-  .center-btn .name { font-size: 14px; font-weight: 600; color: #1a1a1a; }
-  .center-btn .sub { font-size: 11px; color: #999; margin-top: 2px; }
+  .center-btn.selected { border-color: #1a1a2e; background: #f0f0f5; }
+  .center-btn .icon { font-size: 22px; margin-bottom: 5px; }
+  .center-btn .name { font-size: 13px; font-weight: 600; color: #1a1a1a; }
+  .center-btn .sub  { font-size: 11px; color: #999; margin-top: 2px; }
 
-  /* 배송유형 테이블 */
-  .delivery-header {
-    display: grid;
-    grid-template-columns: 100px 1fr 1fr;
-    gap: 8px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #f0f0f0;
-    margin-bottom: 8px;
+  /* 배송유형 섹션 */
+  .delivery-section {
+    border: 1px solid #f0f0f0; border-radius: 12px;
+    padding: 12px 14px; margin-bottom: 10px;
   }
-  .col-th { font-size: 11px; color: #999; font-weight: 500; text-align: center; }
-  .col-th:first-child { text-align: left; }
-
-  .delivery-row {
-    display: grid;
-    grid-template-columns: 100px 1fr 1fr;
-    gap: 8px;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #f8f8f8;
+  .delivery-section:last-child { margin-bottom: 0; }
+  .col-labels {
+    display: grid; grid-template-columns: auto 1fr 1fr;
+    gap: 8px; margin-bottom: 4px;
   }
-  .delivery-row:last-child { border-bottom: none; padding-bottom: 0; }
-
+  .col-labels span { font-size: 10px; color: #bbb; text-align: center; }
+  .col-labels span:first-child { visibility: hidden; min-width: 60px; }
+  .dtype-top {
+    display: grid; grid-template-columns: auto 1fr 1fr;
+    gap: 8px; align-items: flex-start;
+  }
+  .dtype-badge-wrap { padding-top: 8px; }
   .dtype-badge {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 600;
+    display: inline-block; padding: 4px 10px;
+    border-radius: 6px; font-size: 12px; font-weight: 600; white-space: nowrap;
   }
   .dawn { background: #dbeafe; color: #1d4ed8; }
   .same { background: #fef9c3; color: #854d0e; }
   .next { background: #dcfce7; color: #166534; }
-
   .num-input {
-    width: 100%;
-    padding: 10px 8px;
-    border: 1.5px solid #e5e5e5;
-    border-radius: 10px;
-    font-size: 15px;
-    text-align: center;
-    color: #1a1a1a;
-    background: #fafafa;
-    transition: border-color 0.15s;
+    width: 100%; padding: 9px 6px; border: 1.5px solid #e5e5e5; border-radius: 9px;
+    font-size: 14px; text-align: center; color: #1a1a1a; background: #fafafa;
     -webkit-appearance: none;
   }
   .num-input:focus { outline: none; border-color: #1a1a2e; background: #fff; }
-  .num-input.over { border-color: #ef4444; background: #fff5f5; color: #dc2626; }
   .num-input.capa-field { background: #f0f4ff; border-color: #c7d2fe; color: #3730a3; }
-
-  /* 이월 힌트 */
+  .num-input.over { border-color: #ef4444; background: #fff5f5; color: #dc2626; }
+  .capa-hint { font-size: 10px; color: #a5b4fc; text-align: center; margin-top: 3px; }
   .row-hint {
-    grid-column: 1 / -1;
-    font-size: 11px;
-    padding: 4px 8px;
-    border-radius: 6px;
-    margin-top: -4px;
-    margin-bottom: 4px;
+    font-size: 11px; padding: 5px 8px; border-radius: 6px;
+    margin-top: 6px; display: none;
   }
+  .row-hint.show { display: block; }
   .row-hint.overflow { color: #dc2626; background: #fff5f5; }
-  .row-hint.cascade { color: #b45309; background: #fffbeb; }
+  .row-hint.cascade  { color: #b45309; background: #fffbeb; }
+
+  /* 배송유형별 비고 */
+  .note-row { margin-top: 8px; }
+  .note-row input {
+    width: 100%; padding: 8px 10px; border: 1.5px solid #efefef;
+    border-radius: 8px; font-size: 12px; color: #555; background: #fafafa;
+    font-family: inherit;
+  }
+  .note-row input:focus { outline: none; border-color: #1a1a2e; background: #fff; }
+  .note-row input::placeholder { color: #ccc; }
 
   .overflow-summary {
-    margin-top: 10px;
-    padding: 10px 12px;
-    background: #fff5f5;
-    border-radius: 8px;
-    font-size: 12px;
-    color: #dc2626;
-    line-height: 1.6;
-    display: none;
+    margin-top: 10px; padding: 10px 12px; background: #fff5f5;
+    border-radius: 8px; font-size: 12px; color: #dc2626; line-height: 1.6; display: none;
   }
   .overflow-summary.show { display: block; }
-
-  /* 비고 */
-  textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1.5px solid #e5e5e5;
-    border-radius: 10px;
-    font-size: 14px;
-    font-family: inherit;
-    color: #1a1a1a;
-    background: #fafafa;
-    resize: vertical;
-    min-height: 80px;
-  }
-  textarea:focus { outline: none; border-color: #1a1a2e; background: #fff; }
-
-  /* 저장 버튼 */
   .save-btn {
-    width: 100%;
-    padding: 16px;
-    background: #1a1a2e;
-    color: #fff;
-    border: none;
-    border-radius: 14px;
-    font-size: 16px;
-    font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
-    transition: opacity 0.15s, transform 0.1s;
+    width: 100%; padding: 16px; background: #1a1a2e; color: #fff;
+    border: none; border-radius: 14px; font-size: 16px; font-weight: 600;
+    font-family: inherit; cursor: pointer; transition: opacity 0.15s, transform 0.1s;
     -webkit-tap-highlight-color: transparent;
   }
   .save-btn:active { transform: scale(0.98); }
   .save-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-  .save-btn.saving { background: #666; }
-
-  /* 상태 메시지 */
   .status-msg {
-    margin-top: 12px;
-    padding: 12px 16px;
-    border-radius: 12px;
-    font-size: 14px;
-    text-align: center;
-    font-weight: 500;
-    display: none;
+    margin-top: 12px; padding: 12px 16px; border-radius: 12px;
+    font-size: 14px; text-align: center; font-weight: 500; display: none;
   }
-  .status-msg.show { display: block; }
-  .status-msg.ok { background: #f0fdf4; color: #16a34a; }
-  .status-msg.err { background: #fff5f5; color: #dc2626; }
+  .status-msg.show   { display: block; }
+  .status-msg.ok     { background: #f0fdf4; color: #16a34a; }
+  .status-msg.err    { background: #fff5f5; color: #dc2626; }
   .status-msg.saving { background: #f5f5f5; color: #666; }
 </style>
 </head>
 <body>
 <div class="container">
-
   <div class="header">
     <h1>🚚 CJ대한통운 × 네이버</h1>
     <p>프로모션 CAPA 일일 현황 입력</p>
@@ -212,7 +126,7 @@
     <input type="date" class="date-input" id="eventDate">
   </div>
 
-  <!-- FC센터 선택 -->
+  <!-- FC센터 -->
   <div class="card">
     <div class="card-label">FC 센터 선택</div>
     <div class="center-grid">
@@ -231,54 +145,75 @@
 
   <!-- 배송유형별 입력 -->
   <div class="card">
-    <div class="delivery-header">
-      <div class="col-th">배송유형</div>
-      <div class="col-th">CAPA (건)</div>
-      <div class="col-th">실주문량 (건)</div>
-    </div>
+    <div class="card-label">배송유형별 실주문량 입력</div>
 
     <!-- 새벽배송 -->
-    <div class="delivery-row" id="row-dawn">
-      <div><span class="dtype-badge dawn">새벽</span></div>
-      <div><input type="number" class="num-input capa-field" id="capa-dawn" placeholder="CAPA" min="0" oninput="recalc()"></div>
-      <div><input type="number" class="num-input" id="order-dawn" placeholder="주문량" min="0" oninput="recalc()"></div>
+    <div class="delivery-section">
+      <div class="col-labels">
+        <span>-</span><span>CAPA (건)</span><span>실주문량 (건)</span>
+      </div>
+      <div class="dtype-top">
+        <div class="dtype-badge-wrap"><span class="dtype-badge dawn">새벽배송</span></div>
+        <div>
+          <input type="number" class="num-input capa-field" id="capa-dawn" placeholder="CAPA" min="0" oninput="recalc()">
+          <div class="capa-hint">수정 가능합니다</div>
+        </div>
+        <input type="number" class="num-input" id="order-dawn" placeholder="주문량" min="0" oninput="recalc()">
+      </div>
+      <div class="row-hint" id="hint-dawn"></div>
+      <div class="note-row">
+        <input type="text" id="note-dawn" placeholder="새벽배송 비고 / 조치사항 (선택)">
+      </div>
     </div>
-    <div class="row-hint" id="hint-dawn"></div>
 
     <!-- 당일배송 -->
-    <div class="delivery-row" id="row-same">
-      <div><span class="dtype-badge same">당일</span></div>
-      <div><input type="number" class="num-input capa-field" id="capa-same" placeholder="CAPA" min="0" oninput="recalc()"></div>
-      <div><input type="number" class="num-input" id="order-same" placeholder="주문량" min="0" oninput="recalc()"></div>
+    <div class="delivery-section">
+      <div class="col-labels">
+        <span>-</span><span>CAPA (건)</span><span>실주문량 (건)</span>
+      </div>
+      <div class="dtype-top">
+        <div class="dtype-badge-wrap"><span class="dtype-badge same">당일배송</span></div>
+        <div>
+          <input type="number" class="num-input capa-field" id="capa-same" placeholder="CAPA" min="0" oninput="recalc()">
+          <div class="capa-hint">수정 가능합니다</div>
+        </div>
+        <input type="number" class="num-input" id="order-same" placeholder="주문량" min="0" oninput="recalc()">
+      </div>
+      <div class="row-hint" id="hint-same"></div>
+      <div class="note-row">
+        <input type="text" id="note-same" placeholder="당일배송 비고 / 조치사항 (선택)">
+      </div>
     </div>
-    <div class="row-hint" id="hint-same"></div>
 
     <!-- 내일배송 -->
-    <div class="delivery-row" id="row-next">
-      <div><span class="dtype-badge next">내일</span></div>
-      <div><input type="number" class="num-input capa-field" id="capa-next" placeholder="CAPA" min="0" oninput="recalc()"></div>
-      <div><input type="number" class="num-input" id="order-next" placeholder="주문량" min="0" oninput="recalc()"></div>
+    <div class="delivery-section">
+      <div class="col-labels">
+        <span>-</span><span>CAPA (건)</span><span>실주문량 (건)</span>
+      </div>
+      <div class="dtype-top">
+        <div class="dtype-badge-wrap"><span class="dtype-badge next">내일배송</span></div>
+        <div>
+          <input type="number" class="num-input capa-field" id="capa-next" placeholder="CAPA" min="0" oninput="recalc()">
+          <div class="capa-hint">수정 가능합니다</div>
+        </div>
+        <input type="number" class="num-input" id="order-next" placeholder="주문량" min="0" oninput="recalc()">
+      </div>
+      <div class="row-hint" id="hint-next"></div>
+      <div class="note-row">
+        <input type="text" id="note-next" placeholder="내일배송 비고 / 조치사항 (선택)">
+      </div>
     </div>
-    <div class="row-hint" id="hint-next"></div>
 
     <div class="overflow-summary" id="overflow-summary"></div>
   </div>
 
-  <!-- 비고 -->
-  <div class="card">
-    <div class="card-label">비고 / 조치사항 (선택)</div>
-    <textarea id="note" placeholder="이월 처리 내용, 특이사항 등을 입력하세요."></textarea>
-  </div>
-
-  <!-- 저장 -->
   <button class="save-btn" id="saveBtn" onclick="save()">저장하기</button>
   <div class="status-msg" id="statusMsg"></div>
-
 </div>
 
 <script>
-const TOKEN = 'patrTfJayK6oa8w1B.919cc2613bf31816c0e57d57ff2bdcb7c4a1d8ef408a5ea2b7244d32ad29574e';
-const BASE_ID = 'appr5dNaZgmlGpzWi';
+const TOKEN    = 'patrTfJayK6oa8w1B.919cc2613bf31816c0e57d57ff2bdcb7c4a1d8ef408a5ea2b7244d32ad29574e';
+const BASE_ID  = 'appr5dNaZgmlGpzWi';
 const TABLE_ID = 'tbl3GB2tAgSOrlb19';
 const FIELD = {
   key:    'fldEzsYqmw3CKctHI',
@@ -290,7 +225,6 @@ const FIELD = {
   status: 'fldozP8tYjvkoCY32',
   note:   'flddEUlNr249l1xph'
 };
-
 const DEF_CAPA = {
   '용인저온FC': { dawn: 2000, same: 1000, next: 2000 },
   '군포FC':     { dawn: 1500, same: 800,  next: 1500 }
@@ -298,17 +232,16 @@ const DEF_CAPA = {
 
 let selectedCenter = '';
 
-// 오늘 날짜 기본값
 (function() {
   const d = new Date();
-  const s = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-  document.getElementById('eventDate').value = s;
+  document.getElementById('eventDate').value =
+    `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 })();
 
 function selectCenter(center) {
   selectedCenter = center;
   document.getElementById('btn-yongin').classList.toggle('selected', center === '용인저온FC');
-  document.getElementById('btn-gunpo').classList.toggle('selected', center === '군포FC');
+  document.getElementById('btn-gunpo').classList.toggle('selected',  center === '군포FC');
   const c = DEF_CAPA[center];
   document.getElementById('capa-dawn').value = c.dawn;
   document.getElementById('capa-same').value = c.same;
@@ -322,63 +255,50 @@ function getNum(id) {
 }
 
 function recalc() {
-  const capaDawn  = getNum('capa-dawn')  || 0;
-  const capaSame  = getNum('capa-same')  || 0;
-  const capaNext  = getNum('capa-next')  || 0;
-  const ordDawn   = getNum('order-dawn');
-  const ordSame   = getNum('order-same');
-  const ordNext   = getNum('order-next');
+  const capaDawn = getNum('capa-dawn') || 0;
+  const capaSame = getNum('capa-same') || 0;
+  const capaNext = getNum('capa-next') || 0;
+  const ordDawn  = getNum('order-dawn');
+  const ordSame  = getNum('order-same');
+  const ordNext  = getNum('order-next');
 
-  // 이월 계산
-  const dawnOv   = ordDawn != null ? Math.max(0, ordDawn - capaDawn) : 0;
+  const dawnOv    = ordDawn != null ? Math.max(0, ordDawn - capaDawn) : 0;
   const sameTotal = (ordSame || 0) + dawnOv;
-  const sameOv   = ordSame != null ? Math.max(0, sameTotal - capaSame) : 0;
+  const sameOv    = ordSame != null ? Math.max(0, sameTotal - capaSame) : 0;
   const nextTotal = (ordNext || 0) + sameOv;
-  const nextOv   = ordNext != null ? Math.max(0, nextTotal - capaNext) : 0;
+  const nextOv    = ordNext != null ? Math.max(0, nextTotal - capaNext) : 0;
 
-  // 새벽
   setHint('hint-dawn', 'order-dawn', ordDawn, capaDawn, dawnOv, 0, 0);
-  // 당일
   setHint('hint-same', 'order-same', ordSame, capaSame, sameOv, dawnOv, sameTotal);
-  // 내일
   setHint('hint-next', 'order-next', ordNext, capaNext, nextOv, sameOv, nextTotal);
 
-  // 요약
-  const summary = document.getElementById('overflow-summary');
   const parts = [];
   if (dawnOv > 0) parts.push(`새벽 → 당일 이월 +${dawnOv.toLocaleString()}건`);
   if (sameOv > 0) parts.push(`당일 → 내일 이월 +${sameOv.toLocaleString()}건`);
   if (nextOv > 0) parts.push(`내일배송 초과 +${nextOv.toLocaleString()}건`);
-  if (parts.length > 0) {
-    summary.innerHTML = '⚠ ' + parts.join(' / ');
-    summary.classList.add('show');
-  } else {
-    summary.classList.remove('show');
-  }
+  const s = document.getElementById('overflow-summary');
+  s.innerHTML = parts.length ? '⚠ ' + parts.join(' / ') : '';
+  s.classList.toggle('show', parts.length > 0);
 }
 
 function setHint(hintId, inputId, ord, capa, ov, cascadeIn, total) {
-  const hint = document.getElementById(hintId);
+  const hint  = document.getElementById(hintId);
   const input = document.getElementById(inputId);
   hint.className = 'row-hint';
   hint.textContent = '';
-
   if (ord == null) { input.classList.remove('over'); return; }
-
-  if (cascadeIn > 0 && ord != null) {
-    hint.textContent = `이월유입 +${cascadeIn.toLocaleString()} → 실처리 ${total.toLocaleString()}건`;
-    hint.classList.add('cascade', 'show');
-  }
   if (ov > 0) {
     input.classList.add('over');
-    const extra = cascadeIn > 0 ? `` : ``;
     hint.textContent = cascadeIn > 0
       ? `이월유입 +${cascadeIn.toLocaleString()} → 실처리 ${total.toLocaleString()}건 (초과 +${ov.toLocaleString()}건 이월)`
       : `+${ov.toLocaleString()}건 이월`;
     hint.classList.add('overflow', 'show');
   } else {
     input.classList.remove('over');
-    if (cascadeIn === 0) hint.classList.remove('show');
+    if (cascadeIn > 0) {
+      hint.textContent = `이월유입 +${cascadeIn.toLocaleString()} → 실처리 ${total.toLocaleString()}건`;
+      hint.classList.add('cascade', 'show');
+    }
   }
 }
 
@@ -389,83 +309,73 @@ function showStatus(type, msg) {
 }
 
 async function save() {
+  // ✅ 유효성 검사
   if (!selectedCenter) { showStatus('err', '❌ FC 센터를 선택해주세요.'); return; }
   const date = document.getElementById('eventDate').value;
   if (!date) { showStatus('err', '❌ 행사일자를 입력해주세요.'); return; }
+  const ordDawn = getNum('order-dawn');
+  const ordSame = getNum('order-same');
+  const ordNext = getNum('order-next');
+  if (ordDawn == null && ordSame == null && ordNext == null) {
+    showStatus('err', '❌ 실주문량을 하나 이상 입력해주세요.'); return;
+  }
 
-  const dtypes = [
-    { key: 'dawn', label: '새벽배송' },
-    { key: 'same', label: '당일배송' },
-    { key: 'next', label: '내일배송(도착보장)' }
+  const capaDawn = getNum('capa-dawn') || 0;
+  const capaSame = getNum('capa-same') || 0;
+  const capaNext = getNum('capa-next') || 0;
+
+  const dawnOv    = ordDawn != null ? Math.max(0, ordDawn - capaDawn) : 0;
+  const sameTotal = (ordSame || 0) + dawnOv;
+  const sameOv    = ordSame != null ? Math.max(0, sameTotal - capaSame) : 0;
+  const nextTotal = (ordNext || 0) + sameOv;
+  const nextOv    = ordNext != null ? Math.max(0, nextTotal - capaNext) : 0;
+
+  // ✅ 배송유형별 비고 각각 저장
+  const rows = [
+    { label: '새벽배송',           capa: capaDawn, ord: ordDawn, ov: dawnOv, noteId: 'note-dawn' },
+    { label: '당일배송',           capa: capaSame, ord: ordSame, ov: sameOv, noteId: 'note-same' },
+    { label: '내일배송(도착보장)',  capa: capaNext, ord: ordNext, ov: nextOv, noteId: 'note-next' }
   ];
 
-  const capaDawn  = getNum('capa-dawn')  || 0;
-  const capaSame  = getNum('capa-same')  || 0;
-  const capaNext  = getNum('capa-next')  || 0;
-  const ordDawn   = getNum('order-dawn');
-  const ordSame   = getNum('order-same');
-  const ordNext   = getNum('order-next');
-
-  const dawnOv   = ordDawn != null ? Math.max(0, ordDawn - capaDawn) : 0;
-  const sameTotal = (ordSame || 0) + dawnOv;
-  const sameOv   = ordSame != null ? Math.max(0, sameTotal - capaSame) : 0;
-  const nextTotal = (ordNext || 0) + sameOv;
-  const nextOv   = ordNext != null ? Math.max(0, nextTotal - capaNext) : 0;
-
-  const capaVals  = [capaDawn, capaSame, capaNext];
-  const orderVals = [ordDawn, ordSame, ordNext];
-  const ovVals    = [dawnOv, sameOv, nextOv];
-
-  const records = dtypes.map((dt, i) => {
-    const ord = orderVals[i];
-    const cap = capaVals[i];
-    const ov  = ovVals[i];
-    const statusVal = ord == null ? '— 미입력' : ov > 0 ? '⚠ 초과' : '✅ 정상';
+  const records = rows.map(r => {
+    const statusVal = r.ord == null ? '— 미입력' : r.ov > 0 ? '⚠ 초과' : '✅ 정상';
     const fields = {
-      [FIELD.key]:    `${date}_${selectedCenter}_${dt.label}`,
+      [FIELD.key]:    `${date}_${selectedCenter}_${r.label}`,
       [FIELD.date]:   date,
       [FIELD.center]: selectedCenter,
-      [FIELD.dtype]:  dt.label,
-      [FIELD.capa]:   cap,
+      [FIELD.dtype]:  r.label,
+      [FIELD.capa]:   r.capa,
       [FIELD.status]: statusVal,
-      [FIELD.note]:   document.getElementById('note').value
+      [FIELD.note]:   document.getElementById(r.noteId).value
     };
-    if (ord != null) fields[FIELD.orders] = ord;
+    if (r.ord != null) fields[FIELD.orders] = r.ord;
     return { fields };
   });
 
   const btn = document.getElementById('saveBtn');
-  btn.disabled = true;
-  btn.textContent = '저장 중...';
+  btn.disabled = true; btn.textContent = '저장 중...';
   showStatus('saving', '⏳ Airtable에 저장 중입니다...');
 
   try {
     const res = await fetch(`https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}`, {
       method: 'PATCH',
-      headers: {
-        'Authorization': `Bearer ${TOKEN}`,
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Authorization': `Bearer ${TOKEN}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         performUpsert: { fieldsToMergeOn: [FIELD.key] },
         typecast: true,
         records
       })
     });
-
     const data = await res.json();
     if (res.ok) {
-      showStatus('ok', `✅ ${date} ${selectedCenter} 데이터가 저장되었습니다.`);
-      // 실주문량·비고 초기화
+      showStatus('ok', `✅ ${date} ${selectedCenter} 저장 완료!`);
       ['order-dawn','order-same','order-next'].forEach(id => {
         document.getElementById(id).value = '';
         document.getElementById(id).classList.remove('over');
       });
-      document.getElementById('note').value = '';
+      ['note-dawn','note-same','note-next'].forEach(id => document.getElementById(id).value = '');
       ['hint-dawn','hint-same','hint-next'].forEach(id => {
-        const el = document.getElementById(id);
-        el.textContent = '';
-        el.className = 'row-hint';
+        const el = document.getElementById(id); el.textContent = ''; el.className = 'row-hint';
       });
       document.getElementById('overflow-summary').classList.remove('show');
     } else {
@@ -474,9 +384,7 @@ async function save() {
   } catch (err) {
     showStatus('err', '❌ 네트워크 오류: ' + err.message);
   }
-
-  btn.disabled = false;
-  btn.textContent = '저장하기';
+  btn.disabled = false; btn.textContent = '저장하기';
 }
 </script>
 </body>
