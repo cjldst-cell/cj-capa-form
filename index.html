@@ -447,7 +447,8 @@ async function save() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        performUpsert: { fieldIdsToMergeOn: [FIELD.key] },
+        performUpsert: { fieldsToMergeOn: [FIELD.key] },
+        typecast: true,
         records
       })
     });
