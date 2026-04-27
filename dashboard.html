@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CJ대한통운 × 네이버 프로모션 CAPA 현황</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', sans-serif;
+    background: #f5f5f7; min-height: 100vh; padding: 16px 16px 40px;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+
+  /* 헤더 */
+  .header {
+    background: #1a1a2e; border-radius: 16px;
+    padding: 20px 24px; margin-bottom: 14px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .header-left h1 { color: #fff; font-size: 16px; font-weight: 600; margin-bottom: 3px; }
+  .header-left p  { color: rgba(255,255,255,0.5); font-size: 12px; }
+  .refresh-btn {
+    background: rgba(255,255,255,0.12); border: none; color: #fff;
+    padding: 8px 14px; border-radius: 8px; font-size: 12px;
+    cursor: pointer; font-family: inherit; white-space: nowrap;
+  }
+  .refresh-btn:hover { background: rgba(255,255,255,0.2); }
+
+  /* 요약 카드 */
+  .summary-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 14px; }
+  .summary-card {
+    background: #fff; border-radius: 14px; padding: 14px 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+  }
+  .summary-card .s-label { font-size: 11px; color: #999; margin-bottom: 6px; }
+  .summary-card .s-value { font-size: 22px; font-weight: 600; color: #1a1a1a; }
+  .summary-card.alert { border: 1.5px solid #fca5a5; }
+  .summary-card.alert .s-value { color: #dc2626; }
+
+  /* 날짜 필터 */
+  .filter-bar {
+    background: #fff; border-radius: 14px; padding: 12px 16px;
+    margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .filter-label { font-size: 12px; color: #888; white-space: nowrap; }
+  .filter-bar select, .filter-bar input {
+    padding: 6px 10px; border: 1.5px solid #e5e5e5; border-radius: 8px;
+    font-size: 13px; font-family: inherit; color: #1a1a1a; background: #fafafa;
+  }
+  .filter-bar select:focus, .filter-bar input:focus { outline: none; border-color: #1a1a2e; }
+
+  /* 날짜별 섹션 */
+  .day-section { margin-bottom: 16px; }
+  .day-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 8px; padding: 0 4px;
+  }
+  .day-title { font-size: 14px; font-weight: 600; color: #1a1a1a; }
+  .day-date  { font-size: 12px; color: #999; }
+  .alert-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #ef4444; flex-shrink: 0;
+  }
+
+  /* 테이블 카드 */
+  .table-card {
+    background: #fff; border-radius: 14px; overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.07); margin-bottom: 8px;
+  }
+  .center-label {
+    padding: 10px 16px; background: #f8f8fa;
+    font-size: 12px; font-weight: 600; color: #555;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    text-align: left; padding: 8px 14px;
+    color: #aaa; font-weight: 500; font-size: 11px;
+    border-bottom: 1px solid #f5f5f5; background: #fafafa;
+  }
+  td {
+    padding: 10px 14px; border-bottom: 1px solid #f8f8f8;
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  .tr-over { background: #fff8f8; }
+  .tr-over td { color: #7a1f1f; }
+
+  /* 배지 */
+  .badge {
+    display: inline-block; padding: 3px 9px;
+    border-radius: 5px; font-size: 11px; font-weight: 600;
+  }
+  .b-dawn  { background: #dbeafe; color: #1d4ed8; }
+  .b-same  { background: #fef9c3; color: #854d0e; }
+  .b-next  { background: #dcfce7; color: #166534; }
+  .b-over  { background: #fee2e2; color: #dc2626; }
+  .b-ok    { background: #f0fdf4; color: #16a34a; }
+  .b-none  { background: #f5f5f5; color: #999; }
+
+  /* 달성률 바 */
+  .bar-wrap { width: 80px; height: 5px; background: #f0f0f0; border-radius: 3px; margin-top: 4px; }
+  .bar-fill { height: 100%; border-radius: 3px; }
+
+  /* 이월 뱃지 */
+  .cascade-tag {
+    font-size: 10px; color: #b45309; background: #fffbeb;
+    padding: 2px 6px; border-radius: 4px; margin-left: 4px;
+  }
+
+  /* 비고 */
+  .note-text { font-size: 11px; color: #888; margin-top: 2px; }
+
+  /* 로딩 / 에러 */
+  .loading {
+    text-align: center; padding: 60px 20px;
+    color: #999; font-size: 14px;
+  }
+  .loading .spinner {
+    width: 28px; height: 28px; border: 3px solid #e5e5e5;
+    border-top-color: #1a1a2e; border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .empty { text-align: center; padding: 40px; color: #bbb; font-size: 13px; }
+
+  /* 업데이트 시각 */
+  .updated-at { font-size: 11px; color: #bbb; text-align: right; padding: 0 4px 8px; }
+
+  @media (max-width: 480px) {
+    .summary-grid { grid-template-columns: 1fr 1fr; }
+    th, td { padding: 8px 10px; }
+    .bar-wrap { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="header-left">
+      <h1>🚚 CJ대한통운 × 네이버 프로모션</h1>
+      <p>CAPA 모니터링 현황판</p>
+    </div>
+    <button class="refresh-btn" onclick="loadData()">↻ 새로고침</button>
+  </div>
+
+  <!-- 요약 -->
+  <div class="summary-grid" id="summaryGrid">
+    <div class="summary-card"><div class="s-label">데이터 로딩 중</div><div class="s-value">—</div></div>
+    <div class="summary-card"><div class="s-label">데이터 로딩 중</div><div class="s-value">—</div></div>
+    <div class="summary-card"><div class="s-label">데이터 로딩 중</div><div class="s-value">—</div></div>
+  </div>
+
+  <!-- 필터 -->
+  <div class="filter-bar">
+    <span class="filter-label">센터</span>
+    <select id="filterCenter" onchange="render()">
+      <option value="">전체</option>
+      <option value="용인저온FC">용인저온FC</option>
+      <option value="군포FC">군포FC</option>
+    </select>
+    <span class="filter-label">상태</span>
+    <select id="filterStatus" onchange="render()">
+      <option value="">전체</option>
+      <option value="⚠ 초과">초과만</option>
+      <option value="✅ 정상">정상만</option>
+    </select>
+  </div>
+
+  <div id="updatedAt" class="updated-at"></div>
+  <div id="mainContent"><div class="loading"><div class="spinner"></div>데이터를 불러오는 중...</div></div>
+</div>
+
+<script>
+const TOKEN   = 'patrTfJayK6oa8w1B.919cc2613bf31816c0e57d57ff2bdcb7c4a1d8ef408a5ea2b7244d32ad29574e';
+const BASE_ID = 'appr5dNaZgmlGpzWi';
+const TABLE   = 'tbl3GB2tAgSOrlb19';
+const FIELD   = {
+  date:   'fldgwl8LBXZ3xuCla',
+  center: 'fldnXO2k4qgCSkzgC',
+  dtype:  'fldfze8xAT1AD3hbZ',
+  capa:   'fldAFNrgeJuz3XCdI',
+  orders: 'fld1OtkdqMoiRkFTh',
+  status: 'fldozP8tYjvkoCY32',
+  note:   'flddEUlNr249l1xph'
+};
+const DTYPE_CLS = { '새벽배송':'b-dawn', '당일배송':'b-same', '내일배송(도착보장)':'b-next' };
+const DOW = ['일','월','화','수','목','금','토'];
+
+let allRecords = [];
+
+async function loadData() {
+  document.getElementById('mainContent').innerHTML =
+    '<div class="loading"><div class="spinner"></div>데이터를 불러오는 중...</div>';
+  try {
+    let records = [], offset = '';
+    while (true) {
+      const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE}?pageSize=100${offset ? '&offset=' + offset : ''}`;
+      const res = await fetch(url, { headers: { 'Authorization': `Bearer ${TOKEN}` } });
+      const data = await res.json();
+      records = records.concat(data.records || []);
+      if (!data.offset) break;
+      offset = data.offset;
+    }
+    allRecords = records;
+    const now = new Date();
+    document.getElementById('updatedAt').textContent =
+      `마지막 업데이트: ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+    render();
+  } catch(e) {
+    document.getElementById('mainContent').innerHTML =
+      `<div class="empty">데이터를 불러오지 못했습니다.<br><small>${e.message}</small></div>`;
+  }
+}
+
+function fmt(n) { return n == null ? '-' : Number(n).toLocaleString(); }
+
+function render() {
+  const filterCenter = document.getElementById('filterCenter').value;
+  const filterStatus = document.getElementById('filterStatus').value;
+
+  let records = allRecords.map(r => r.fields);
+
+  if (filterCenter) records = records.filter(r => r[FIELD.center] === filterCenter);
+  if (filterStatus) records = records.filter(r => r[FIELD.status] === filterStatus);
+
+  // 요약
+  const total   = allRecords.length;
+  const overAll = allRecords.filter(r => r.fields[FIELD.status] === '⚠ 초과').length;
+  const dates   = [...new Set(allRecords.map(r => r.fields[FIELD.date]).filter(Boolean))];
+  document.getElementById('summaryGrid').innerHTML = `
+    <div class="summary-card">
+      <div class="s-label">입력 일수</div>
+      <div class="s-value">${dates.length}일</div>
+    </div>
+    <div class="summary-card">
+      <div class="s-label">총 입력 건수</div>
+      <div class="s-value">${total}건</div>
+    </div>
+    <div class="summary-card ${overAll > 0 ? 'alert' : ''}">
+      <div class="s-label">CAPA 초과</div>
+      <div class="s-value">${overAll}건</div>
+    </div>`;
+
+  if (records.length === 0) {
+    document.getElementById('mainContent').innerHTML =
+      '<div class="empty">표시할 데이터가 없습니다.</div>';
+    return;
+  }
+
+  // 날짜별 그룹화
+  const byDate = {};
+  records.forEach(r => {
+    const d = r[FIELD.date] || '날짜미입력';
+    if (!byDate[d]) byDate[d] = {};
+    const c = r[FIELD.center] || '센터미입력';
+    if (!byDate[d][c]) byDate[d][c] = [];
+    byDate[d][c].push(r);
+  });
+
+  // 최신 날짜 위로
+  const sortedDates = Object.keys(byDate).sort((a, b) => b.localeCompare(a));
+  const DTYPE_ORDER = ['새벽배송', '당일배송', '내일배송(도착보장)'];
+  const CENTER_ORDER = ['용인저온FC', '군포FC'];
+
+  let html = '';
+  sortedDates.forEach(date => {
+    const hasAlert = Object.values(byDate[date]).flat().some(r => r[FIELD.status] === '⚠ 초과');
+    const d = new Date(date + 'T00:00:00');
+    const dowStr = DOW[d.getDay()] + '요일';
+
+    html += `<div class="day-section">
+      <div class="day-header">
+        ${hasAlert ? '<div class="alert-dot"></div>' : ''}
+        <span class="day-title">${date}</span>
+        <span class="day-date">${dowStr}</span>
+      </div>`;
+
+    const centers = CENTER_ORDER.filter(c => byDate[date][c]);
+    centers.forEach(center => {
+      const rows = byDate[date][center];
+      // 배송유형 순서 정렬
+      rows.sort((a,b) =>
+        DTYPE_ORDER.indexOf(a[FIELD.dtype]) - DTYPE_ORDER.indexOf(b[FIELD.dtype])
+      );
+
+      // 이월 연쇄 계산
+      const get = dtype => rows.find(r => r[FIELD.dtype] === dtype);
+      const dawn = get('새벽배송'), same = get('당일배송'), next = get('내일배송(도착보장)');
+      const dawnOrd  = dawn  ? (dawn[FIELD.orders]  || 0) : 0;
+      const sameOrd  = same  ? (same[FIELD.orders]  || 0) : 0;
+      const nextOrd  = next  ? (next[FIELD.orders]  || 0) : 0;
+      const dawnCapa = dawn  ? (dawn[FIELD.capa]   || 0) : 0;
+      const sameCapa = same  ? (same[FIELD.capa]   || 0) : 0;
+      const nextCapa = next  ? (next[FIELD.capa]   || 0) : 0;
+      const dawnOv    = Math.max(0, dawnOrd - dawnCapa);
+      const sameTotal = sameOrd + dawnOv;
+      const sameOv    = Math.max(0, sameTotal - sameCapa);
+      const nextTotal = nextOrd + sameOv;
+      const cascade   = { '새벽배송': 0, '당일배송': dawnOv, '내일배송(도착보장)': sameOv };
+      const totals    = { '새벽배송': dawnOrd, '당일배송': sameTotal, '내일배송(도착보장)': nextTotal };
+
+      html += `<div class="table-card">
+        <div class="center-label">${center === '용인저온FC' ? '❄️' : '📦'} ${center}</div>
+        <table>
+          <thead><tr>
+            <th>배송유형</th><th>CAPA</th><th>주문량</th><th>실처리량</th><th>달성률</th><th>이월량</th><th>상태</th><th>비고</th>
+          </tr></thead>
+          <tbody>`;
+
+      rows.forEach(r => {
+        const dtype  = r[FIELD.dtype] || '';
+        const capa   = r[FIELD.capa]   || 0;
+        const ord    = r[FIELD.orders];
+        const status = r[FIELD.status] || '— 미입력';
+        const note   = r[FIELD.note]   || '';
+        const ci     = cascade[dtype] || 0;
+        const tot    = totals[dtype]  || ord || 0;
+        const ov     = Math.max(0, tot - capa);
+        const pct    = ord != null && capa > 0 ? Math.round(tot / capa * 100) : null;
+        const isOver = status === '⚠ 초과';
+        const dtypeShort = dtype === '내일배송(도착보장)' ? '내일배송' : dtype;
+
+        let statusBadge = '';
+        if (status === '⚠ 초과')  statusBadge = '<span class="badge b-over">⚠ 초과</span>';
+        else if (status === '✅ 정상') statusBadge = '<span class="badge b-ok">✅ 정상</span>';
+        else statusBadge = '<span class="badge b-none">미입력</span>';
+
+        const barColor = pct >= 100 ? '#ef4444' : pct >= 80 ? '#f59e0b' : '#22c55e';
+        const barHtml  = pct != null
+          ? `${pct}%<div class="bar-wrap"><div class="bar-fill" style="width:${Math.min(pct,100)}%;background:${barColor}"></div></div>`
+          : '-';
+        const cascadeTag = ci > 0 ? `<span class="cascade-tag">+${fmt(ci)} 유입</span>` : '';
+        const ovHtml = dtype === '내일배송(도착보장)' ? '-' : (ov > 0 ? `<span class="badge b-over">+${fmt(ov)}</span>` : '-');
+
+        html += `<tr class="${isOver ? 'tr-over' : ''}">
+          <td><span class="badge ${DTYPE_CLS[dtype] || ''}">${dtypeShort}</span></td>
+          <td>${fmt(capa)}</td>
+          <td>${ord != null ? fmt(ord) : '-'}</td>
+          <td>${ord != null ? fmt(tot) : '-'}${cascadeTag}</td>
+          <td>${barHtml}</td>
+          <td>${ovHtml}</td>
+          <td>${statusBadge}</td>
+          <td><span class="note-text">${note || '—'}</span></td>
+        </tr>`;
+      });
+
+      html += `</tbody></table></div>`;
+    });
+
+    html += `</div>`;
+  });
+
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+// 자동 새로고침 (5분마다)
+loadData();
+setInterval(loadData, 5 * 60 * 1000);
+</script>
+</body>
+</html>
